@@ -1,0 +1,22 @@
+DESCRIPTION="Common UNIX Printing System (PDF backend)"
+HOMEPAGE="http://www.cups-pdf.de/"
+SRC_URI="http://www.cups-pdf.de/src/${PN}_${PV}.tar.gz"
+
+src_compile() {
+	lndirs
+	cd ${B}
+	${CC} ${CFLAGS} -o src/cups-pdf.exe src/cups-pdf.c || error "compile failed"
+}
+
+src_install() {
+	cd ${B}
+	exeinto /usr/lib/cups/backend
+	doexe src/cups-pdf.exe
+
+	insinto /usr/share/cups/model
+	doins extra/CUPS-PDF.ppd
+
+	insinto /etc/cups
+	doins extra/cups-pdf.conf
+	make_etc_defaults /etc/cups/cups-pdf.conf
+}

@@ -1,0 +1,15 @@
+--- origsrc/cups-pdf-2.5.0/src/cups-pdf.c	2009-01-26 05:56:20.000000000 -0600
++++ src/cups-pdf-2.5.0/src/cups-pdf.c	2011-01-30 16:50:53.061291100 -0600
+@@ -523,10 +523,12 @@ int main(int argc, char *argv[]) {
+   struct passwd *passwd;
+   pid_t pid;
+ 
++#ifndef __CYGWIN__
+   if (setuid(0)) {
+     (void) fputs("cups-pdf cannot be called without root privileges!\n", stderr);
+     return 0;
+   }
++#endif
+ 
+   if (init()) 
+     return 5;
